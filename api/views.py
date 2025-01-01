@@ -20,11 +20,11 @@ class ProjectMembersViewSet(viewsets.ModelViewSet):
     serializer_class=ProjectMembersSerializer
 
 #Tasks Details View
-class TasksSerializer(viewsets.ModelViewSet):
+class TasksViewSet(viewsets.ModelViewSet):
     queryset=Tasks.objects.all()
     serializer_class=TasksSerializer
 
 #Comments View
-class CommentsSerializer(viewsets.ModelViewSet):
+class CommentsViewSet(viewsets.ModelViewSet):
     queryset=Comments.objects.all()
     serializer_class=CommentsSerializer
