@@ -6,3 +6,31 @@ class UsersSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model=Users
         fields="__all__"
+
+#Projects Details Serializer
+
+class ProjectsDetailsSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model=Projects_Details
+        fields="__all__"
+
+#Project Memebers Serializer
+
+class PojectMembersSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model=Project_Members
+        fields="__all__"
+
+#Tasks Details Serializer
+
+class TasksSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model=Tasks
+        fields="__all__"
+
+#Comments Serializer
+
+class CommentsSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model=Comments
+        fields="__all__"
