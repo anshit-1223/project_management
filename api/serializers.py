@@ -16,7 +16,7 @@ class ProjectsDetailsSerializer(serializers.HyperlinkedModelSerializer):
 
 #Project Memebers Serializer
 
-class PojectMembersSerializer(serializers.HyperlinkedModelSerializer):
+class ProjectMembersSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model=Project_Members
         fields="__all__"
