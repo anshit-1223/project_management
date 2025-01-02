@@ -21,6 +21,9 @@ class UsersViewSet(viewsets.ModelViewSet):
 class ProjectsDetailsViewSet(viewsets.ModelViewSet):
     queryset=Projects_Details.objects.all()
     serializer_class=ProjectsDetailsSerializer
+    @action(detail=True,methods=['GET'])
+    def tasks(self,request):
+        return Response({"msg":"tasks"})
 
 #Project Members View
 class ProjectMembersViewSet(viewsets.ModelViewSet):
