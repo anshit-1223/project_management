@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework import viewsets,status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from .models import *
@@ -12,7 +12,11 @@ class UsersViewSet(viewsets.ModelViewSet):
     serializer_class=UsersSerializer
     @action(detail=False,methods=["POST"],url_path="register")
     def register(self, request):
-        return Response({"msg":"Registered Successfully"})
+        serializer=UsersSerializer(data=request.data)
+        if serializer.is_valid():
+            user=serializer.save()
+            return Response({"msg":"User Registered Successfully","user_id":user.id},status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     @action(detail=False,methods=["POST"],url_path="login")
     def login(self, request):
         return Response({"msg":"Login Successfull"})
