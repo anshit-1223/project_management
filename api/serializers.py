@@ -10,6 +10,7 @@ class UsersSerializer(serializers.HyperlinkedModelSerializer):
 #Projects Details Serializer
 
 class ProjectsDetailsSerializer(serializers.HyperlinkedModelSerializer):
+    project_id=serializers.ReadOnlyField()
     class Meta:
         model=Projects_Details
         fields="__all__"

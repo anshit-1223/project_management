@@ -14,7 +14,7 @@ class UsersViewSet(viewsets.ModelViewSet):
     def register(self, request):
         return Response({"msg":"Registered Successfully"})
     @action(detail=False,methods=["POST"],url_path="login")
-    def register(self, request):
+    def login(self, request):
         return Response({"msg":"Login Successfull"})
 
 #Projects Details View
@@ -22,8 +22,11 @@ class ProjectsDetailsViewSet(viewsets.ModelViewSet):
     queryset=Projects_Details.objects.all()
     serializer_class=ProjectsDetailsSerializer
     @action(detail=True,methods=['GET'])
-    def tasks(self,request):
-        return Response({"msg":"tasks"})
+    def tasks(self,request,pk=None):
+        project_id=Projects_Details.objects.get(pk=pk)
+        tasks=Tasks.objects.filter(task_project=project_id)
+        tasks_serializer=TasksSerializer(tasks,many=True,context={"request":request})
+        return Response(tasks_serializer.data)
 
 #Project Members View
 class ProjectMembersViewSet(viewsets.ModelViewSet):

@@ -11,6 +11,8 @@ class Users(models.Model):
     first_name=models.CharField(max_length=50)
     last_name=models.CharField(max_length=50)
     date_joined=models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return self.username
 
 
 #Projects Details Model
@@ -20,6 +22,8 @@ class Projects_Details(models.Model):
     project_description=models.TextField()
     project_owner=models.ForeignKey(Users,on_delete=models.CASCADE)
     project_created_at=models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return self.project_name
 
 #Project Members Model
 class Project_Members(models.Model):
