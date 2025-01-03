@@ -37,6 +37,13 @@ class ProjectMembersViewSet(viewsets.ModelViewSet):
 class TasksViewSet(viewsets.ModelViewSet):
     queryset=Tasks.objects.all()
     serializer_class=TasksSerializer
+    @action(detail=True,methods=['GET'])
+    def comments(self,request,pk=None):
+        task=Tasks.objects.get(pk=pk)
+        comments=Comments.objects.filter(comments_task=task)
+        comments_serializer=CommentsSerializer(comments,many=True,context={"request":request})
+        return Response(comments_serializer.data)
+
 
 #Comments View
 class CommentsViewSet(viewsets.ModelViewSet):

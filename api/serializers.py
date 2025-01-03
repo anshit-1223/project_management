@@ -25,6 +25,7 @@ class ProjectMembersSerializer(serializers.HyperlinkedModelSerializer):
 #Tasks Details Serializer
 
 class TasksSerializer(serializers.HyperlinkedModelSerializer):
+    # task_id=serializers.ReadOnlyField()
     class Meta:
         model=Tasks
         fields="__all__"

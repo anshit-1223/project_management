@@ -43,6 +43,8 @@ class Tasks(models.Model):
     task_project=models.ForeignKey(Projects_Details,on_delete=models.CASCADE)
     task_created_at=models.DateTimeField(auto_now=True)
     task_due_date=models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return self.task_title
 
 #Comments Model
 class Comments(models.Model):
