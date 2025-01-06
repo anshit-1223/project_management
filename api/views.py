@@ -50,14 +50,20 @@ class ProjectMembersViewSet(viewsets.ModelViewSet):
 class TasksViewSet(viewsets.ModelViewSet):
     queryset=Tasks.objects.all()
     serializer_class=TasksSerializer
-    @action(detail=True,methods=['GET'])
+    @action(detail=True,methods=['GET','POST'],url_path='comments')
     def comments(self,request,pk=None):
-        task=Tasks.objects.get(pk=pk)
-        comments=Comments.objects.filter(comments_task=task)
-        comments_serializer=CommentsSerializer(comments,many=True,context={"request":request})
-        return Response(comments_serializer.data)
-
-
+        if request.method=='GET':
+            task=Tasks.objects.get(pk=pk)
+            comments=Comments.objects.filter(comments_task=task)
+            comments_serializer=CommentsSerializer(comments,many=True,context={"request":request})
+            return Response(comments_serializer.data)
+        if request.method=='POST':
+            task=self.get_object()
+            serializer=CommentsSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save(comments_task=task)
+                return Response({"msg":"Comment Added"},status=status.HTTP_201_CREATED)
+            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 #Comments View
 class CommentsViewSet(viewsets.ModelViewSet):
     queryset=Comments.objects.all()
