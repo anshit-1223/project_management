@@ -25,20 +25,20 @@ class UsersViewSet(viewsets.ModelViewSet):
 class ProjectsDetailsViewSet(viewsets.ModelViewSet):
     queryset=Projects_Details.objects.all()
     serializer_class=ProjectsDetailsSerializer
-    @action(detail=True,methods=['POST'], url_path='tasks')
+    @action(detail=True,methods=['POST','GET'], url_path='tasks')
     def tasks(self,request,pk=None):
-        project=self.get_object()
-        serializer=TasksSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(task_project=pk)
-            return Response({"msg":"Task Added"},status=status.HTTP_201_CREATED)
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-    @action(detail=True,methods=['GET'])
-    def tasks(self,request,pk=None):
-        project_id=Projects_Details.objects.get(pk=pk)
-        tasks=Tasks.objects.filter(task_project=project_id)
-        tasks_serializer=TasksSerializer(tasks,many=True,context={"request":request})
-        return Response(tasks_serializer.data)
+        if request.method=='POST':
+            project=self.get_object()
+            serializer=TasksSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save(task_project=project)
+                return Response({"msg":"Task Added"},status=status.HTTP_201_CREATED)
+            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+        if request.method=='GET':
+            project_id=Projects_Details.objects.get(pk=pk)
+            tasks=Tasks.objects.filter(task_project=project_id)
+            tasks_serializer=TasksSerializer(tasks,many=True,context={"request":request})
+            return Response(tasks_serializer.data)
     
 
 #Project Members View
